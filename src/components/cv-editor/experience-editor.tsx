@@ -21,7 +21,6 @@ export function ExperienceEditor({ entries, onChange }: Props) {
       id: Math.random().toString(36).substr(2, 9),
       company: "",
       position: "",
-      location: "",
       startDate: "",
       endDate: "",
       current: false,

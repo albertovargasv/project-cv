@@ -21,7 +21,6 @@ export function CVPreview({ data }: Props) {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-y-2 gap-x-4 text-xs">
           {personalInfo.email && <div className="flex items-center gap-2"><Mail className="w-3 h-3 text-slate-500" /> {personalInfo.email}</div>}
           {personalInfo.phone && <div className="flex items-center gap-2"><Phone className="w-3 h-3 text-slate-500" /> {personalInfo.phone}</div>}
-          {personalInfo.location && <div className="flex items-center gap-2"><MapPin className="w-3 h-3 text-slate-500" /> {personalInfo.location}</div>}
           {personalInfo.github && <div className="flex items-center gap-2"><Github className="w-3 h-3 text-slate-500" /> {personalInfo.github}</div>}
           {personalInfo.linkedin && <div className="flex items-center gap-2"><Linkedin className="w-3 h-3 text-slate-500" /> {personalInfo.linkedin}</div>}
           {personalInfo.website && <div className="flex items-center gap-2"><Globe className="w-3 h-3 text-slate-500" /> {personalInfo.website}</div>}
@@ -55,7 +54,6 @@ export function CVPreview({ data }: Props) {
                         {exp.startDate} — {exp.current ? "Present" : exp.endDate}
                       </p>
                     </div>
-                    {exp.location && <p className="text-xs text-slate-500 mb-2 italic">{exp.location}</p>}
                     <p className="text-sm text-slate-700 whitespace-pre-line leading-snug">{exp.description}</p>
                   </div>
                 ))}

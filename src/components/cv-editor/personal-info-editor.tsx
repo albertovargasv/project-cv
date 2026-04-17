@@ -42,11 +42,6 @@ export function PersonalInfoEditor({ data, onChange }: Props) {
         </div>
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="location">Location</Label>
-        <Input id="location" name="location" value={data.location} onChange={handleChange} placeholder="City, State" />
-      </div>
-
       <div className="grid grid-cols-3 gap-2">
         <div className="space-y-2">
           <Label htmlFor="github">GitHub</Label>
