@@ -56,10 +56,10 @@ const INITIAL_DATA: CVData = {
     }
   ],
   skills: [
-    { id: "1", name: "TypeScript", category: "Languages" },
-    { id: "2", name: "React / Next.js", category: "Frameworks" },
-    { id: "3", name: "Node.js", category: "Backend" },
-    { id: "4", name: "PostgreSQL", category: "Database" }
+    { id: "1", name: "TypeScript" },
+    { id: "2", name: "React / Next.js" },
+    { id: "3", name: "Node.js" },
+    { id: "4", name: "PostgreSQL" }
   ],
   projects: [
     {

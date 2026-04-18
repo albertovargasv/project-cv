@@ -94,16 +94,9 @@ export function CVPreview({ data }: Props) {
             <section>
               <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-3">Technical Skills</h2>
               <div className="space-y-4">
-                {Object.entries(skills.reduce((acc, s) => {
-                  if (!acc[s.category]) acc[s.category] = [];
-                  acc[s.category].push(s.name);
-                  return acc;
-                }, {} as Record<string, string[]>)).map(([category, names]) => (
-                  <div key={category}>
-                    <h4 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-1">{category}</h4>
-                    <p className="text-xs text-slate-800 font-medium leading-relaxed">{names.join(", ")}</p>
-                  </div>
-                ))}
+                <p className="text-xs text-slate-800 font-medium leading-relaxed">
+                  {skills.map(s => s.name).join(", ")}
+                </p>
               </div>
             </section>
           )}
