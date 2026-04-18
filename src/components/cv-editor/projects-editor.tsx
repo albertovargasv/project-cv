@@ -102,7 +102,7 @@ export function ProjectsEditor({ projects, onChange }: Props) {
                   />
                 </div>
                 <div className="flex flex-wrap gap-1">
-                  {project.technologies.map(t => (
+                  {(project.technologies || []).map(t => (
                     <Badge key={t} variant="outline" className="flex items-center gap-1">
                       {t}
                       <button onClick={() => removeTech(project.id, t)}><X className="w-3 h-3" /></button>

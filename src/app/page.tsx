@@ -9,6 +9,7 @@ import { SkillsEditor } from "@/components/cv-editor/skills-editor";
 import { ProjectsEditor } from "@/components/cv-editor/projects-editor";
 import { CoursesEditor } from "@/components/cv-editor/courses-editor";
 import { CVPreview } from "@/components/cv-preview/cv-preview";
+import { ErrorBoundary } from "@/components/error-boundary";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { 
@@ -94,11 +95,45 @@ const INITIAL_DATA: CVData = {
 export default function DevVaultApp() {
   const [cvData, setCvData] = useState<CVData>(INITIAL_DATA);
   const [activeTab, setActiveTab] = useState("personal");
+  const [isLoaded, setIsLoaded] = useState(false);
   const { toast } = useToast();
+
+  useEffect(() => {
+    const saved = localStorage.getItem("devvault_cv_data");
+    if (saved) {
+      try {
+        const parsed = JSON.parse(saved);
+        // Ensure arrays exist to prevent map undefined errors from old saves
+        setCvData({
+          ...INITIAL_DATA,
+          ...parsed,
+          experience: parsed.experience || [],
+          education: parsed.education || [],
+          courses: parsed.courses || [],
+          skills: parsed.skills || [],
+          softSkills: parsed.softSkills || [],
+          projects: parsed.projects || [],
+        });
+      } catch (e) {
+        console.error("Failed to parse saved CV data", e);
+      }
+    }
+    setIsLoaded(true);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      localStorage.setItem("devvault_cv_data", JSON.stringify(cvData));
+    }
+  }, [cvData, isLoaded]);
 
   const handleExportPdf = () => {
     window.print();
   };
+
+  if (!isLoaded) {
+    return <div className="min-h-screen flex items-center justify-center bg-background text-foreground">Loading...</div>;
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-accent selection:text-accent-foreground">
@@ -138,46 +173,60 @@ export default function DevVaultApp() {
 
             <div className="mt-6 bg-card border rounded-xl p-6 min-h-[600px] shadow-sm">
               <TabsContent value="personal" className="mt-0">
-                <PersonalInfoEditor 
-                  data={cvData.personalInfo} 
-                  onChange={(info) => setCvData(prev => ({ ...prev, personalInfo: info }))} 
-                />
+                <ErrorBoundary name="PersonalInfoEditor">
+                  <PersonalInfoEditor 
+                    data={cvData.personalInfo} 
+                    onChange={(info) => setCvData(prev => ({ ...prev, personalInfo: info }))} 
+                  />
+                </ErrorBoundary>
               </TabsContent>
               <TabsContent value="experience" className="mt-0">
-                <ExperienceEditor 
-                  entries={cvData.experience} 
-                  onChange={(entries) => setCvData(prev => ({ ...prev, experience: entries }))} 
-                />
+                <ErrorBoundary name="ExperienceEditor">
+                  <ExperienceEditor 
+                    entries={cvData.experience || []} 
+                    onChange={(entries) => setCvData(prev => ({ ...prev, experience: entries }))} 
+                  />
+                </ErrorBoundary>
               </TabsContent>
               <TabsContent value="education" className="mt-0">
-                <EducationEditor 
-                  entries={cvData.education} 
-                  onChange={(entries) => setCvData(prev => ({ ...prev, education: entries }))} 
-                />
+                <ErrorBoundary name="EducationEditor">
+                  <EducationEditor 
+                    entries={cvData.education || []} 
+                    onChange={(entries) => setCvData(prev => ({ ...prev, education: entries }))} 
+                  />
+                </ErrorBoundary>
               </TabsContent>
               <TabsContent value="courses" className="mt-0">
-                <CoursesEditor 
-                  entries={cvData.courses || []} 
-                  onChange={(entries) => setCvData(prev => ({ ...prev, courses: entries }))} 
-                />
+                <ErrorBoundary name="CoursesEditor">
+                  <CoursesEditor 
+                    entries={cvData.courses || []} 
+                    onChange={(entries) => setCvData(prev => ({ ...prev, courses: entries }))} 
+                  />
+                </ErrorBoundary>
               </TabsContent>
               <TabsContent value="skills" className="mt-0">
-                <SkillsEditor 
-                  skills={cvData.skills} 
-                  onChange={(skills) => setCvData(prev => ({ ...prev, skills }))} 
-                />
+                <ErrorBoundary name="SkillsEditor">
+                  <SkillsEditor 
+                    skills={cvData.skills || []} 
+                    onChange={(skills) => setCvData(prev => ({ ...prev, skills }))} 
+                  />
+                </ErrorBoundary>
               </TabsContent>
               <TabsContent value="softskills" className="mt-0">
-                <SkillsEditor 
-                  skills={cvData.softSkills || []} 
-                  onChange={(skills) => setCvData(prev => ({ ...prev, softSkills: skills }))} 
-                />
+                <ErrorBoundary name="SoftSkillsEditor">
+                  <SkillsEditor 
+                    skills={cvData.softSkills || []} 
+                    onChange={(skills) => setCvData(prev => ({ ...prev, softSkills: skills }))} 
+                  />
+                </ErrorBoundary>
               </TabsContent>
               <TabsContent value="projects" className="mt-0">
-                <ProjectsEditor 
-                  projects={cvData.projects} 
-                  onChange={(projects) => setCvData(prev => ({ ...prev, projects }))} 
-                />
+                <ErrorBoundary name="ProjectsEditor">
+                  <ProjectsEditor 
+                    projects={cvData.projects || []} 
+                    onChange={(projects) => setCvData(prev => ({ ...prev, projects }))} 
+                  />
+                </ErrorBoundary>
               </TabsContent>
             </div>
           </Tabs>
@@ -195,7 +244,9 @@ export default function DevVaultApp() {
           
           <div className="relative group">
             <div className="cv-preview-container overflow-hidden">
-              <CVPreview data={cvData} />
+              <ErrorBoundary name="CVPreview">
+                <CVPreview data={cvData} />
+              </ErrorBoundary>
             </div>
           </div>
           

@@ -38,7 +38,7 @@ export function CVPreview({ data }: Props) {
           )}
 
           {/* Experience */}
-          {experience.length > 0 && (
+          {experience && experience.length > 0 && (
             <section>
               <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-4">Experience</h2>
               <div className="space-y-6">
@@ -61,7 +61,7 @@ export function CVPreview({ data }: Props) {
           )}
 
           {/* Projects */}
-          {projects.length > 0 && (
+          {projects && projects.length > 0 && (
             <section>
               <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-4">Selected Projects</h2>
               <div className="space-y-4">
@@ -89,7 +89,7 @@ export function CVPreview({ data }: Props) {
         {/* Right Column: Sidebar */}
         <div className="col-span-4 space-y-8">
           {/* Skills */}
-          {skills.length > 0 && (
+          {skills && skills.length > 0 && (
             <section>
               <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-3">Technical Skills</h2>
               <div className="space-y-4">
@@ -113,7 +113,7 @@ export function CVPreview({ data }: Props) {
           )}
 
           {/* Education */}
-          {education.length > 0 && (
+          {education && education.length > 0 && (
             <section>
               <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-3">Education</h2>
               <div className="space-y-4">
