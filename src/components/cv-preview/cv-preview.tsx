@@ -9,8 +9,7 @@ interface Props {
 }
 
 export function CVPreview({ data }: Props) {
-  const { personalInfo, experience, education, skills, projects } = data;
-
+  const { personalInfo, experience, education, courses, skills, softSkills, projects } = data;
   return (
     <div className="p-8 h-full bg-white text-slate-800 font-body overflow-y-auto">
       {/* Header */}
@@ -101,6 +100,18 @@ export function CVPreview({ data }: Props) {
             </section>
           )}
 
+          {/* Soft Skills */}
+          {softSkills && softSkills.length > 0 && (
+            <section>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-3">Soft Skills</h2>
+              <div className="space-y-4">
+                <p className="text-xs text-slate-800 font-medium leading-relaxed">
+                  {softSkills.map(s => s.name).join(", ")}
+                </p>
+              </div>
+            </section>
+          )}
+
           {/* Education */}
           {education.length > 0 && (
             <section>
@@ -112,6 +123,23 @@ export function CVPreview({ data }: Props) {
                     <p className="text-xs text-primary font-medium leading-tight">{edu.fieldOfStudy}</p>
                     <p className="text-[11px] text-slate-600 mt-1">{edu.school}</p>
                     <p className="text-[10px] text-slate-400 uppercase tracking-tighter">{edu.startDate} — {edu.endDate}</p>
+                  </div>
+                ))}
+              </div>
+            </section>
+          )}
+
+          {/* Courses & Certifications */}
+          {courses && courses.length > 0 && (
+            <section>
+              <h2 className="text-sm font-bold uppercase tracking-wider text-slate-900 border-b border-slate-200 pb-1 mb-3">Courses & Certifications</h2>
+              <div className="space-y-4">
+                {courses.map(course => (
+                  <div key={course.id}>
+                    <h3 className="text-xs font-bold text-slate-900">{course.name}</h3>
+                    <p className="text-xs text-primary font-medium leading-tight">{course.issuer}</p>
+                    {course.description && <p className="text-[11px] text-slate-600 mt-1">{course.description}</p>}
+                    {course.startDate && course.endDate && <p className="text-[10px] text-slate-400 uppercase tracking-tighter mt-1">{course.startDate} — {course.endDate}</p>}
                   </div>
                 ))}
               </div>

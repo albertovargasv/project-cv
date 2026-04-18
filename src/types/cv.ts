@@ -43,10 +43,21 @@ export interface Project {
   github: string;
 }
 
+export interface Course {
+  id: string;
+  name: string;
+  issuer: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+}
+
 export interface CVData {
   personalInfo: PersonalInfo;
   experience: Experience[];
   education: Education[];
+  courses: Course[];
   skills: Skill[];
+  softSkills: Skill[];
   projects: Project[];
 }

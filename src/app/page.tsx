@@ -7,6 +7,7 @@ import { ExperienceEditor } from "@/components/cv-editor/experience-editor";
 import { EducationEditor } from "@/components/cv-editor/education-editor";
 import { SkillsEditor } from "@/components/cv-editor/skills-editor";
 import { ProjectsEditor } from "@/components/cv-editor/projects-editor";
+import { CoursesEditor } from "@/components/cv-editor/courses-editor";
 import { CVPreview } from "@/components/cv-preview/cv-preview";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,7 +19,9 @@ import {
   Layers, 
   Download, 
   Eye, 
-  Edit3 
+  Edit3,
+  Heart,
+  Award
 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -55,11 +58,26 @@ const INITIAL_DATA: CVData = {
       description: "Specialized in Distributed Systems and Database Management."
     }
   ],
+  courses: [
+    {
+      id: "1",
+      name: "AWS Certified Solutions Architect",
+      issuer: "Amazon Web Services",
+      startDate: "2023-01",
+      endDate: "2023-03",
+      description: "Comprehensive certification covering compute, networking, storage, and database AWS services."
+    }
+  ],
   skills: [
     { id: "1", name: "TypeScript" },
     { id: "2", name: "React / Next.js" },
     { id: "3", name: "Node.js" },
     { id: "4", name: "PostgreSQL" }
+  ],
+  softSkills: [
+    { id: "1", name: "Communication" },
+    { id: "2", name: "Team Leadership" },
+    { id: "3", name: "Problem Solving" }
   ],
   projects: [
     {
@@ -108,11 +126,13 @@ export default function DevVaultApp() {
         {/* Editor Section */}
         <section className="no-print lg:col-span-5 space-y-6">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid grid-cols-5 w-full bg-card p-1">
+            <TabsList className="grid grid-cols-7 w-full bg-card p-1">
               <TabsTrigger value="personal" title="Personal Info"><User className="w-4 h-4" /></TabsTrigger>
               <TabsTrigger value="experience" title="Experience"><Briefcase className="w-4 h-4" /></TabsTrigger>
               <TabsTrigger value="education" title="Education"><GraduationCap className="w-4 h-4" /></TabsTrigger>
+              <TabsTrigger value="courses" title="Courses"><Award className="w-4 h-4" /></TabsTrigger>
               <TabsTrigger value="skills" title="Skills"><Wrench className="w-4 h-4" /></TabsTrigger>
+              <TabsTrigger value="softskills" title="Soft Skills"><Heart className="w-4 h-4" /></TabsTrigger>
               <TabsTrigger value="projects" title="Projects"><Layers className="w-4 h-4" /></TabsTrigger>
             </TabsList>
 
@@ -135,10 +155,22 @@ export default function DevVaultApp() {
                   onChange={(entries) => setCvData(prev => ({ ...prev, education: entries }))} 
                 />
               </TabsContent>
+              <TabsContent value="courses" className="mt-0">
+                <CoursesEditor 
+                  entries={cvData.courses || []} 
+                  onChange={(entries) => setCvData(prev => ({ ...prev, courses: entries }))} 
+                />
+              </TabsContent>
               <TabsContent value="skills" className="mt-0">
                 <SkillsEditor 
                   skills={cvData.skills} 
                   onChange={(skills) => setCvData(prev => ({ ...prev, skills }))} 
+                />
+              </TabsContent>
+              <TabsContent value="softskills" className="mt-0">
+                <SkillsEditor 
+                  skills={cvData.softSkills || []} 
+                  onChange={(skills) => setCvData(prev => ({ ...prev, softSkills: skills }))} 
                 />
               </TabsContent>
               <TabsContent value="projects" className="mt-0">
