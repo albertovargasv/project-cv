@@ -243,7 +243,7 @@ export default function DevVaultApp() {
           </div>
           
           <div className="relative group">
-            <div className="cv-preview-container overflow-hidden">
+            <div className="cv-preview-container overflow-hidden print:overflow-visible print:h-auto">
               <ErrorBoundary name="CVPreview">
                 <CVPreview data={cvData} />
               </ErrorBoundary>

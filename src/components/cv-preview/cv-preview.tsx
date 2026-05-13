@@ -11,7 +11,7 @@ interface Props {
 export function CVPreview({ data }: Props) {
   const { personalInfo, experience, education, courses, skills, softSkills, projects } = data;
   return (
-    <div className="p-8 h-full bg-white text-slate-800 font-body overflow-y-auto">
+    <div className="p-8 h-full print:h-auto bg-white text-slate-800 font-body overflow-y-auto print:overflow-visible">
       {/* Header */}
       <header className="border-b-2 border-slate-900 pb-6 mb-6">
         <h1 className="text-4xl font-bold uppercase tracking-tight text-slate-900 mb-1">{personalInfo.fullName || "Your Name"}</h1>

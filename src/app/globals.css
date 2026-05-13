@@ -64,5 +64,8 @@
     margin: 0 !important;
     width: 100% !important;
     max-width: none !important;
+    aspect-ratio: auto !important;
+    overflow: visible !important;
+    height: auto !important;
   }
 }
